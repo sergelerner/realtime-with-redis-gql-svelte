@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +15,8 @@
     "graphql-redis-subscriptions": "~2.1.2",
     "graphql-subscriptions": "~1.1.0",
     "ioredis": "~4.14.1"
+  },
+  "devDependencies": {
+    "nodemon": "~2.0.2"
   }
 }

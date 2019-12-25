@@ -1,0 +1,27 @@
+const pubsub = require("./pubsub");
+const { get, set } = require("./redis");
+
+const COMPONENTS = {
+  WHITE_LIST: "wl",
+};
+
+const publishRandomData = async (generator, component) => {
+  const data = generator();
+  pubsub.publish(component, { [component]: data });
+  await set(component, data);
+  return data;
+};
+
+module.exports = {
+  Query: {
+    wl: () => get(COMPONENTS.WHITE_LIST),
+  },
+  Mutation: {
+    wl: () => true,
+  },
+  Subscription: {
+    wl: {
+      subscribe: () => pubsub.asyncIterator(COMPONENTS.WHITE_LIST)
+    },
+  }
+};
