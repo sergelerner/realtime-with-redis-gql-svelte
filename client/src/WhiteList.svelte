@@ -1,10 +1,14 @@
 <script context="module">
   import gql from 'graphql-tag';
   import { client } from './apollo';
+  import Textfield, { Input } from '@smui/textfield';
+  import FloatingLabel from '@smui/floating-label';
+  import LineRipple from '@smui/line-ripple';
 
   const ARTICLES = gql`
     {
       wl {
+        name
         all
         list
       }
@@ -33,9 +37,14 @@
   {:then result}
     {#each result.data.wl as wl}
       <li>
-        {wl.all}
+        <Textfield>
+          <Input value={wl.name} />
+          <FloatingLabel for="name-input">Name</FloatingLabel>
+          <LineRipple />
+        </Textfield>
+        
         {#each wl.list as item}
-            {item}
+            <!-- {item} -->
         {/each}
       </li>
     {:else}

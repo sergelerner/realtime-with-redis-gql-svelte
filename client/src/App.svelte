@@ -10,7 +10,11 @@
 </script>
 
 <style>
-	h1 {
+	section {
+		padding: 40px;
+	}
+
+	h2 {
 		color: purple;
 	}
 </style>

@@ -3,6 +3,7 @@ const { gql } = require("apollo-server");
 const schema = gql`
 
   type WHITE_LIST {
+    name: String!
     all: Boolean!
     list: [String]
   }
