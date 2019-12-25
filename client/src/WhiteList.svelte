@@ -4,6 +4,7 @@
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
+  import Switch from '@smui/switch';
 
   const ARTICLES = gql`
     {
@@ -31,21 +32,40 @@
   const wl = query(client, { query: ARTICLES });
 </script>
 
+<style>
+  .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .item-switch {
+    margin-right: 20px;
+  }
+
+  :global(label) {
+    top: 12px !important;
+  }
+</style>
+
 <ul>
   {#await $wl}
     <li>Loading...</li>
   {:then result}
     {#each result.data.wl as wl}
-      <li>
-        <Textfield>
-          <Input value={wl.name} />
-          <FloatingLabel for="name-input">Name</FloatingLabel>
-          <LineRipple />
-        </Textfield>
-        
-        {#each wl.list as item}
-            <!-- {item} -->
-        {/each}
+      <li class="item">
+        <div class="item-switch">
+          <Switch checked={wl.all} />
+        </div>
+
+        <div class="item-input">
+          <Textfield>
+            <Input value={wl.name} />
+            <FloatingLabel for="name-input">Name</FloatingLabel>
+            <LineRipple />
+          </Textfield>
+        </div>
       </li>
     {:else}
       <li>No wl found</li>

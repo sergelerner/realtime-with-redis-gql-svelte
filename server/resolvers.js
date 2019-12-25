@@ -16,7 +16,7 @@ module.exports = {
   Query: {
     wl: () => [
       { name: 'android_ios_onelink_install_cuid', all: true, list: ['one', 'two'] },
-      { name: 'fraud_bad_model', all: true, list: ['one', 'two'] },
+      { name: 'fraud_bad_model', all: false, list: ['one', 'two'] },
       { name: 'ms-B', all: true, list: ['one', 'two'] },
     ], //get(COMPONENTS.WHITE_LIST),
   },

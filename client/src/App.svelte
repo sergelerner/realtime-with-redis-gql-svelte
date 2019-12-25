@@ -16,11 +16,13 @@
 
 	h2 {
 		color: purple;
+		margin-bottom: 20px;
+		font-size: 24px;
 	}
 </style>
 
 <section>
-	<h2>Will see....</h2>
+	<h2>White List</h2>
 
   {#await whiteListPreloading}
 		<p>Preloading articles....</p>
