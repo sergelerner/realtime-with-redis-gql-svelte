@@ -14,7 +14,7 @@ const publishRandomData = async (generator, component) => {
 
 module.exports = {
   Query: {
-    wl: () => get(COMPONENTS.WHITE_LIST),
+    wl: () => [ { all: true, list: ['one', 'two'] } ], //get(COMPONENTS.WHITE_LIST),
   },
   Mutation: {
     wl: () => true,

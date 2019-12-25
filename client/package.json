@@ -25,6 +25,7 @@
     "graphql": "~14.5.8",
     "graphql-tag": "~2.10.1",
     "sirv-cli": "^0.4.4",
+    "subscriptions-transport-ws": "~0.9.16",
     "svelte-apollo": "~0.3.0"
   }
 }
