@@ -3,6 +3,7 @@ const redis = new Redis();
 
 const get = async key => {
   try {
+    console.log('Geting from Redis key', key)
     const data = await redis.get(key);
     return JSON.parse(data);
   } catch (e) {

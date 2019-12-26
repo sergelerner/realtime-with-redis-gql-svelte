@@ -5,23 +5,26 @@ const COMPONENTS = {
   WHITE_LIST: "wl",
 };
 
-const publishRandomData = async (generator, component) => {
-  const data = generator();
-  pubsub.publish(component, { [component]: data });
-  await set(component, data);
-  return data;
-};
-
 module.exports = {
   Query: {
-    wl: () => [
-      { name: 'android_ios_onelink_install_cuid', all: true, list: ['one', 'two'] },
-      { name: 'fraud_bad_model', all: false, list: ['one', 'two'] },
-      { name: 'ms-B', all: true, list: ['one', 'two'] },
-    ], //get(COMPONENTS.WHITE_LIST),
+    wl: async () => {
+      const input = await get(COMPONENTS.WHITE_LIST)
+      const data = JSON.parse(input)
+      return data
+    },
   },
+  
   Mutation: {
-    wl: () => true,
+    wl: async (parent, args) => {
+      const { input } = args
+      const component = COMPONENTS.WHITE_LIST
+      const data = JSON.parse(input)
+
+      pubsub.publish(component, { [component]: input })
+      await set(component, input)
+
+      return data
+    },
   },
   Subscription: {
     wl: {

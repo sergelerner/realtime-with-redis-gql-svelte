@@ -2,7 +2,7 @@
   import gql from 'graphql-tag';
   import { client } from './apollo';
 
-  const ARTICLES = gql`
+  const WHITE_LIST = gql`
     {
       wl {
         name
@@ -11,16 +11,24 @@
       }
     }
   `;
+
+  const SAVE_WHITE_LIST = gql`
+    mutation($value: String!) {
+      wl(input: $value) {
+        name
+        all
+        list
+      }
+    }
+  `;
   
   export async function preload() {
-    return {
-      cache: await client.query({ query: ARTICLES })
-    };
+    return await client.query({ query: WHITE_LIST })
   }
 </script>
 
 <script>
-  import { restore } from 'svelte-apollo';
+  import { restore, mutate } from 'svelte-apollo';
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
@@ -28,12 +36,21 @@
   import Button, { Label } from '@smui/button';
   
   export let cache;
-  restore(client, ARTICLES, cache.data);
+  
+  restore(client, WHITE_LIST, cache.data);
 
   let list = cache.data.wl.map(item => item)
 
-  function save() {
-    console.log('saving...', list)
+  async function save() {
+    try {
+      await mutate(client, {
+        mutation: SAVE_WHITE_LIST,
+        variables: { value: JSON.stringify(list) }
+      });
+      restore(client, AUTHOR_LIST, list);
+    } catch(error) {
+      console.error(error);
+    }
   }
 </script>
 

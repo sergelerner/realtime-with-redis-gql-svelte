@@ -22,12 +22,12 @@
 </style>
 
 <section>
-	<h2>White List</h2>
+	<h2>White List!</h2>
 
   {#await whiteListPreloading}
 		<p>Preloading articles....</p>
 	{:then preloaded}
-		<WhiteList {...preloaded} />
+		<WhiteList cache={preloaded} />
 	{:catch error}
 		<p>Error preloading articles: {error}</p>
 	{/await}

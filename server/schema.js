@@ -13,7 +13,7 @@ const schema = gql`
   }
 
   type Mutation {
-    wl: [WHITE_LIST]
+    wl(input: String!): [WHITE_LIST]
   }
 
   type Subscription {
