@@ -1,10 +1,6 @@
 <script context="module">
   import gql from 'graphql-tag';
   import { client } from './apollo';
-  import Textfield, { Input } from '@smui/textfield';
-  import FloatingLabel from '@smui/floating-label';
-  import LineRipple from '@smui/line-ripple';
-  import Switch from '@smui/switch';
 
   const ARTICLES = gql`
     {
@@ -24,12 +20,21 @@
 </script>
 
 <script>
-  import { restore, query } from 'svelte-apollo';
+  import { restore } from 'svelte-apollo';
+  import Textfield, { Input } from '@smui/textfield';
+  import FloatingLabel from '@smui/floating-label';
+  import LineRipple from '@smui/line-ripple';
+  import Switch from '@smui/switch';
+  import Button, { Label } from '@smui/button';
   
   export let cache;
   restore(client, ARTICLES, cache.data);
 
-  const wl = query(client, { query: ARTICLES });
+  let list = cache.data.wl.map(item => item)
+
+  function save() {
+    console.log('saving...', list)
+  }
 </script>
 
 <style>
@@ -50,27 +55,25 @@
 </style>
 
 <ul>
-  {#await $wl}
-    <li>Loading...</li>
-  {:then result}
-    {#each result.data.wl as wl}
-      <li class="item">
-        <div class="item-switch">
-          <Switch checked={wl.all} />
-        </div>
+  {#each list as wl}
+    <li class="item">
+      <div class="item-switch">
+        <Switch bind:checked={wl.all} />
+      </div>
 
-        <div class="item-input">
-          <Textfield>
-            <Input value={wl.name} />
-            <FloatingLabel for="name-input">Name</FloatingLabel>
-            <LineRipple />
-          </Textfield>
-        </div>
-      </li>
-    {:else}
-      <li>No wl found</li>
-    {/each}
-  {:catch error}
-    <li>Error loading wl: {error}</li>
-  {/await}
+      <div class="item-input">
+        <Textfield>
+          <Input bind:value={wl.name} />
+          <FloatingLabel for="name-input">Name</FloatingLabel>
+          <LineRipple />
+        </Textfield>
+      </div>
+    </li>
+  {:else}
+    <li>No wl found</li>
+  {/each}
 </ul>
+
+<Button on:click={save} variant="raised">
+  <Label>Save</Label>
+</Button>

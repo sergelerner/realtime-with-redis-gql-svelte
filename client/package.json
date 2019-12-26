@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^6.0.0",
+    "@smui/button": "~1.0.0-beta.19",
     "@smui/floating-label": "~1.0.0-beta.19",
     "@smui/form-field": "~1.0.0-beta.19",
     "@smui/line-ripple": "~1.0.0-beta.19",
