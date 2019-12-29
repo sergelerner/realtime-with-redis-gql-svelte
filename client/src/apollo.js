@@ -13,7 +13,7 @@ const getHeaders = () => {
 const cache = new InMemoryCache();
 
 const wsLink = new WebSocketLink({
-  uri: "ws://localhost:5000/graphql",
+  uri: "ws://localhost:4000/graphql",
   options: {
     reconnect: true,
     lazy: true,

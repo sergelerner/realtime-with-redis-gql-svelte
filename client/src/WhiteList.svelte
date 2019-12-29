@@ -1,16 +1,7 @@
 <script context="module">
   import gql from 'graphql-tag';
   import { client } from './apollo';
-
-  const WHITE_LIST = gql`
-    {
-      wl {
-        name
-        all
-        list
-      }
-    }
-  `;
+  import { subscribe } from 'svelte-apollo';
 
   const SAVE_WHITE_LIST = gql`
     mutation($value: String!) {
@@ -21,14 +12,26 @@
       }
     }
   `;
+
+  const SUBSCRIBE_WHITE_LIST = gql`
+    subscription Traffic{
+      wl {
+        name
+        all
+        list
+      }
+    }
+  `;
   
-  export async function preload() {
-    return await client.query({ query: WHITE_LIST })
+  export function preload() {
+    return subscribe(client, {
+      query: SUBSCRIBE_WHITE_LIST,
+    });
   }
 </script>
 
 <script>
-  import { restore, mutate } from 'svelte-apollo';
+  import { mutate } from 'svelte-apollo';
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
@@ -36,18 +39,13 @@
   import Button, { Label } from '@smui/button';
   
   export let cache;
-  
-  restore(client, WHITE_LIST, cache.data);
-
-  let list = cache.data.wl.map(item => item)
 
   async function save() {
     try {
       await mutate(client, {
         mutation: SAVE_WHITE_LIST,
-        variables: { value: JSON.stringify(list) }
+        variables: { value: JSON.stringify(cache.data.wl) }
       });
-      restore(client, AUTHOR_LIST, list);
     } catch(error) {
       console.error(error);
     }
@@ -72,7 +70,7 @@
 </style>
 
 <ul>
-  {#each list as wl}
+  {#each cache.data.wl as wl}
     <li class="item">
       <div class="item-switch">
         <Switch bind:checked={wl.all} />

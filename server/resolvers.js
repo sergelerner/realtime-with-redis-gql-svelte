@@ -7,11 +7,7 @@ const COMPONENTS = {
 
 module.exports = {
   Query: {
-    wl: async () => {
-      const input = await get(COMPONENTS.WHITE_LIST)
-      const data = JSON.parse(input)
-      return data
-    },
+    wl: async () => await get(COMPONENTS.WHITE_LIST),
   },
   
   Mutation: {
@@ -20,15 +16,19 @@ module.exports = {
       const component = COMPONENTS.WHITE_LIST
       const data = JSON.parse(input)
 
-      pubsub.publish(component, { [component]: input })
-      await set(component, input)
+      pubsub.publish(component, { [component]: data })
+      await set(component, data)
 
       return data
     },
   },
   Subscription: {
     wl: {
-      subscribe: () => pubsub.asyncIterator(COMPONENTS.WHITE_LIST)
+      subscribe: async () => {
+        const data = await get(COMPONENTS.WHITE_LIST)
+        pubsub.publish(COMPONENTS.WHITE_LIST, { [COMPONENTS.WHITE_LIST]: data })
+        return pubsub.asyncIterator(COMPONENTS.WHITE_LIST)
+      },
     },
   }
 };

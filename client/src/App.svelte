@@ -6,6 +6,8 @@
 
   const whiteListPreloading = whiteListPreload();
 
+  console.log('whiteListPreloading', whiteListPreloading)
+
 	setClient(client);
 </script>
 
@@ -24,7 +26,7 @@
 <section>
 	<h2>White List!</h2>
 
-  {#await whiteListPreloading}
+  {#await $whiteListPreloading}
 		<p>Preloading articles....</p>
 	{:then preloaded}
 		<WhiteList cache={preloaded} />
