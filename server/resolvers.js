@@ -1,9 +1,12 @@
+const { withFilter } = require("graphql-subscriptions");
 const pubsub = require("./pubsub");
 const { get, set } = require("./redis");
 
 const COMPONENTS = {
   WHITE_LIST: "wl",
 };
+
+const sessions = []
 
 module.exports = {
   Query: {
@@ -24,10 +27,25 @@ module.exports = {
   },
   Subscription: {
     wl: {
-      subscribe: async () => {
+      subscribe: async (payload, variables, context) => {
         const data = await get(COMPONENTS.WHITE_LIST)
-        pubsub.publish(COMPONENTS.WHITE_LIST, { [COMPONENTS.WHITE_LIST]: data })
-        return pubsub.asyncIterator(COMPONENTS.WHITE_LIST)
+
+        setImmediate(() => {
+          pubsub.publish(COMPONENTS.WHITE_LIST, { [COMPONENTS.WHITE_LIST]: data, isFirstMessage: true })
+        })
+
+        return withFilter(
+          () => pubsub.asyncIterator(COMPONENTS.WHITE_LIST),
+          (payload, variables, context) => {
+            const { sessionId } = context
+            const { isFirstMessage } = payload
+            const isFirstConnection = !sessions.includes(sessionId)
+            if (isFirstConnection) {
+              sessions.push(sessionId)
+            }
+            return isFirstConnection || !isFirstMessage
+          }
+        )(payload, variables, context)
       },
     },
   }

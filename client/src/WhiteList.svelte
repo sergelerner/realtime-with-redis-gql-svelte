@@ -14,7 +14,7 @@
   `;
 
   const SUBSCRIBE_WHITE_LIST = gql`
-    subscription Traffic{
+    subscription {
       wl {
         name
         all
