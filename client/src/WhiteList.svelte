@@ -32,13 +32,23 @@
 
 <script>
   import { mutate } from 'svelte-apollo';
-  import Textfield, { Input } from '@smui/textfield';
-  import FloatingLabel from '@smui/floating-label';
-  import LineRipple from '@smui/line-ripple';
-  import Switch from '@smui/switch';
+  import WhiteListItem from './WhiteListItem.svelte'
   import Button, { Label } from '@smui/button';
+  import Fab, { Icon } from '@smui/fab';
   
   export let cache;
+
+  function addItem() {
+    cache.data.wl = [ ...cache.data.wl, {
+      name: '',
+      all: false,
+      list: [],
+    }]
+  }
+
+  function deleteItem(name) {
+    cache.data.wl = cache.data.wl.filter(x => x.name !== name)
+  }
 
   async function save() {
     try {
@@ -52,43 +62,32 @@
   }
 </script>
 
+<section>
+  <Fab on:click={addItem} mini>
+    <Icon class="material-icons">+</Icon>
+  </Fab>
+</section>
+
+<section>
+  {#each cache.data.wl as wl}
+    <WhiteListItem
+      bind:all={wl.all}
+      bind:name={wl.name}
+      deleteItem={deleteItem}
+    />
+  {:else}
+    <p>No wl found</p>
+  {/each}
+</section>
+
+<section>
+  <Button on:click={save} variant="raised">
+    <Label>Save</Label>
+  </Button>
+</section>
+
 <style>
-  .item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  section {
     margin-bottom: 20px;
   }
-
-  .item-switch {
-    margin-right: 20px;
-  }
-
-  :global(label) {
-    top: 12px !important;
-  }
 </style>
-
-<ul>
-  {#each cache.data.wl as wl}
-    <li class="item">
-      <div class="item-switch">
-        <Switch bind:checked={wl.all} />
-      </div>
-
-      <div class="item-input">
-        <Textfield>
-          <Input bind:value={wl.name} />
-          <FloatingLabel for="name-input">Name</FloatingLabel>
-          <LineRipple />
-        </Textfield>
-      </div>
-    </li>
-  {:else}
-    <li>No wl found</li>
-  {/each}
-</ul>
-
-<Button on:click={save} variant="raised">
-  <Label>Save</Label>
-</Button>
