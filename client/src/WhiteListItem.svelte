@@ -6,12 +6,13 @@
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
   import Switch from '@smui/switch';
-  import IconButton, {Icon} from '@smui/icon-button';
+  import IconButton, { Icon } from '@smui/icon-button';
   import flash from "./flash.js";
 
   export let all;
   export let name;
   export let deleteItem;
+  let redColor = "#F95052";
 
   let item;
 
@@ -32,9 +33,17 @@
   .item-switch {
     margin-right: 20px;
   }
+
+  :global(.item-delete button i) {
+    color: var(--red-color)
+  }
 </style>
 
-<div class="item" bind:this={item}>
+<div
+  class="item"
+  bind:this={item}
+  style="--red-color: {redColor}"
+>
   <div class="item-switch">
     <Switch bind:checked={all} />
   </div>
@@ -47,7 +56,7 @@
     </Textfield>
   </div>
 
-  <div>
+  <div class="item-delete">
     <IconButton
       class="material-icons"
       on:click={() => deleteItem(name)}>
