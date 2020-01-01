@@ -51,7 +51,7 @@
     <IconButton
       class="material-icons"
       on:click={() => deleteItem(name)}>
-      -
+      <Icon class="material-icons">delete</Icon>
     </IconButton>
   </div>
 </div>

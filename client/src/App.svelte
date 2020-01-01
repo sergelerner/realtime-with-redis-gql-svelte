@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 <script>
 	import ApolloClient from 'apollo-client';
 	import { client } from './apollo';
