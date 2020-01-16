@@ -9,11 +9,14 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^6.0.0",
     "@smui/button": "~1.0.0-beta.19",
+    "@smui/checkbox": "~1.0.0-beta.19",
     "@smui/fab": "~1.0.0-beta.19",
     "@smui/floating-label": "~1.0.0-beta.19",
     "@smui/form-field": "~1.0.0-beta.19",
     "@smui/icon-button": "~1.0.0-beta.19",
     "@smui/line-ripple": "~1.0.0-beta.19",
+    "@smui/list": "~1.0.0-beta.19",
+    "@smui/paper": "~1.0.0-beta.19",
     "@smui/switch": "~1.0.0-beta.19",
     "@smui/textfield": "~1.0.0-beta.19",
     "rollup": "^1.12.0",
@@ -34,6 +37,7 @@
     "apollo-utilities": "~1.3.3",
     "graphql": "~14.5.8",
     "graphql-tag": "~2.10.1",
+    "lodash": "~4.17.15",
     "sirv-cli": "^0.4.4",
     "subscriptions-transport-ws": "~0.9.16",
     "svelte-apollo": "~0.3.0"

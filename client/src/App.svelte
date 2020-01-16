@@ -4,11 +4,9 @@
 	import ApolloClient from 'apollo-client';
 	import { client } from './apollo';
   import { setClient } from 'svelte-apollo';
-  import WhiteList, { preload as whiteListPreload } from './WhiteList.svelte';
+  import WhiteList, { preload as whiteListPreload } from './components/white-list/WhiteList.svelte';
 
   const whiteListPreloading = whiteListPreload();
-
-  console.log('whiteListPreloading', whiteListPreloading)
 
 	setClient(client);
 </script>

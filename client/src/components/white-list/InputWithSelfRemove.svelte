@@ -5,14 +5,14 @@
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
-  import Switch from '@smui/switch';
   import IconButton, { Icon } from '@smui/icon-button';
-  import flash from "./flash.js";
+  import flash from "../misc/flash.js";
 
-  export let all;
   export let name;
+  export let disabled;
   export let deleteItem;
-  let redColor = "#F95052";
+  let redColor = '#F95052';
+  let disabledColor = '#E8E8E8'
 
   let item;
 
@@ -42,22 +42,20 @@
 <div
   class="item"
   bind:this={item}
-  style="--red-color: {redColor}"
+  style="--red-color: {disabled ? disabledColor :redColor}"
 >
-  <div class="item-switch">
-    <Switch bind:checked={all} />
-  </div>
 
   <div class="item-input">
-    <Textfield>
+    <Textfield disabled={disabled}>
       <Input bind:value={name} />
-      <FloatingLabel for="name-input">Name</FloatingLabel>
+      <FloatingLabel for="name-input">Site ID</FloatingLabel>
       <LineRipple />
     </Textfield>
   </div>
 
   <div class="item-delete">
     <IconButton
+      disabled={disabled}
       class="material-icons"
       on:click={() => deleteItem(name)}>
       <Icon class="material-icons">delete</Icon>
