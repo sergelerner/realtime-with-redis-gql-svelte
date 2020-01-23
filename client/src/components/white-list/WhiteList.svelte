@@ -37,7 +37,7 @@
   import Header from './Header.svelte'
   import Navigation from './Navigation.svelte'
   import ItemEditor from './ItemEditor.svelte'
-  
+
   export let cache;
   let activeParent = _.head(cache.data.wl);
 

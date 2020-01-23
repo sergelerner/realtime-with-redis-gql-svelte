@@ -3,14 +3,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
 
 <script>
-	import ApolloClient from 'apollo-client';
-	import { client } from './apollo';
-  import { setClient } from 'svelte-apollo';
-  import WhiteList, { preload as whiteListPreload } from './components/white-list/WhiteList.svelte';
+	import Paper, {Content} from '@smui/paper'
 
-  const whiteListPreloading = whiteListPreload();
+	import ApolloClient from 'apollo-client'
+	import { client } from './apollo'
+  import { setClient } from 'svelte-apollo'
+  import WhiteList, { preload as whiteListPreload } from './components/white-list/WhiteList.svelte'
 
-	setClient(client);
+
+  const whiteListPreloading = whiteListPreload()
+
+	setClient(client)
 </script>
 
 <style type="text/scss">
@@ -18,14 +21,18 @@
 	@import "./styles/variables";
 
   :global(body) {
+		height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-  }
-
-	section {
-		padding: 40px;
+		align-items: center;
+		background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+	}
+	
+	:global(.white-list) {
+		width: 800px;
+		height: 700px;
+		padding: 50px !important;
 	}
 
 	h2 {
@@ -34,7 +41,7 @@
 	}
 </style>
 
-<section>
+<Paper class="white-list" elevation="6">
 	<h2>White List!</h2>
 
   {#await $whiteListPreloading}
@@ -44,4 +51,4 @@
 	{:catch error}
 		<p>Error preloading articles: {error}</p>
 	{/await}
-</section>
+</Paper>
