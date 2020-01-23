@@ -13,7 +13,10 @@
 	setClient(client);
 </script>
 
-<style>
+<style type="text/scss">
+	@import "@material/typography/mdc-typography";
+	@import "./styles/variables";
+
   :global(body) {
     display: flex;
     flex-direction: row;
@@ -26,14 +29,13 @@
 	}
 
 	h2 {
-		color: purple;
-		margin-bottom: 20px;
-		font-size: 24px;
+		@include mdc-typography("headline4");
+		margin-bottom: $space-l;
 	}
 </style>
 
 <section>
-	<h2 class="mdc-typography--headline1">White List!</h2>
+	<h2>White List!</h2>
 
   {#await $whiteListPreloading}
 		<p>Preloading articles....</p>
