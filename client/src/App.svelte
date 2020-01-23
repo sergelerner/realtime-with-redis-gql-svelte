@@ -4,12 +4,12 @@
 
 <script>
 	import Paper, {Content} from '@smui/paper'
+	import LinearProgress from '@smui/linear-progress';
 
 	import ApolloClient from 'apollo-client'
 	import { client } from './apollo'
   import { setClient } from 'svelte-apollo'
   import WhiteList, { preload as whiteListPreload } from './components/white-list/WhiteList.svelte'
-
 
   const whiteListPreloading = whiteListPreload()
 
@@ -45,7 +45,7 @@
 	<h2>White List!</h2>
 
   {#await $whiteListPreloading}
-		<p>Preloading articles....</p>
+		<LinearProgress indeterminate />
 	{:then preloaded}
 		<WhiteList cache={preloaded} />
 	{:catch error}

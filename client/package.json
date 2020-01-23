@@ -15,6 +15,7 @@
     "@smui/form-field": "~1.0.0-beta.19",
     "@smui/icon-button": "~1.0.0-beta.19",
     "@smui/line-ripple": "~1.0.0-beta.19",
+    "@smui/linear-progress": "~1.0.0-beta.19",
     "@smui/list": "~1.0.0-beta.19",
     "@smui/paper": "~1.0.0-beta.19",
     "@smui/switch": "~1.0.0-beta.19",
