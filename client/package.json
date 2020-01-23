@@ -29,6 +29,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@material/typography": "~4.0.0",
     "apollo-cache-inmemory": "~1.6.5",
     "apollo-client": "~2.6.8",
     "apollo-link": "~1.2.13",

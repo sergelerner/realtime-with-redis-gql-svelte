@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
 
 <script>
 	import ApolloClient from 'apollo-client';
@@ -12,6 +14,13 @@
 </script>
 
 <style>
+  :global(body) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
 	section {
 		padding: 40px;
 	}
@@ -24,7 +33,7 @@
 </style>
 
 <section>
-	<h2>White List!</h2>
+	<h2 class="mdc-typography--headline1">White List!</h2>
 
   {#await $whiteListPreloading}
 		<p>Preloading articles....</p>
