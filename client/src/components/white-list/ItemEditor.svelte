@@ -17,62 +17,71 @@
 
 </script>
 
-<div class="rename">
-  <Textfield>
-    <Input bind:value={activeItem.name} />
-    <FloatingLabel for="name-input">Media Source</FloatingLabel>
-    <LineRipple />
-  </Textfield>
-</div>
+<section>
+  <article>
+    <div class="rename">
+      <Textfield fullwidth bind:value={activeItem.name} label="Media Source">
+        <LineRipple />
+      </Textfield>
+    </div>
 
-<div class="select-all">
-  <FormField>
-    <Checkbox bind:checked={activeItem.all} />
-    <span slot="label">Select all</span>
-  </FormField>
-</div>
+    <div class="select-all">
+      <FormField>
+        <Checkbox bind:checked={activeItem.all} />
+        <span slot="label">Select all</span>
+      </FormField>
+    </div>
 
-<div class="list">
-  {#each activeItem.list as item}
-    <InputWithSelfRemove
-      disabled={activeItem.all}
-      bind:name={item}
-      deleteItem={deleteSubItem}
-    />
-  {:else}
-    {#if activeItem.all}
-      <p>All Site IDs</p>
-    {:else}
-      <p>Add Site ID</p>
+    <div class="list">
+      {#each activeItem.list as item}
+        <InputWithSelfRemove
+          disabled={activeItem.all}
+          bind:name={item}
+          deleteItem={deleteSubItem}
+        />
+      {:else}
+        {#if activeItem.all}
+          <p>All Site IDs</p>
+        {:else}
+          <p>Add Site ID</p>
+        {/if}
+      {/each}
+    </div>
+
+
+    {#if !activeItem.all}
+      <div class="edit__add-new">
+        <IconButton
+          disabled={activeItem.all}
+          class="material-icons"
+          on:click={addSubItem}>
+          add
+        </IconButton>
+      </div>
     {/if}
-  {/each}
-</div>
+  </article>
 
+  <footer class="actions">
+    <Button on:click={saveItem} variant="raised">
+      <Label>Save</Label>
+    </Button>
 
-{#if !activeItem.all}
-  <div class="edit__add-new">
-    <IconButton
-      disabled={activeItem.all}
-      class="material-icons"
-      on:click={addSubItem}>
-      add
-    </IconButton>
-  </div>
-{/if}
-
-<footer class="actions">
-  <Button on:click={saveItem} variant="raised">
-    <Label>Save</Label>
-  </Button>
-
-  <Button on:click={deleteItem} variant="raised">
-    <Label>Delete</Label>
-  </Button>
-</footer>
+    <Button on:click={deleteItem} variant="raised">
+      <Label>Delete</Label>
+    </Button>
+  </footer>
+</section>
 
 <style type="text/scss">
   @import "@material/typography/mdc-typography";
   @import "../../styles/variables";
+
+  section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
   p {
     @include mdc-typography("caption");
@@ -88,6 +97,8 @@
 
   .list {
     padding-left: $space-s;
+    max-height: 210px;
+    overflow: auto;
   }
 
   .actions {

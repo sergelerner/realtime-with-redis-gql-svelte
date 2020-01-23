@@ -27,6 +27,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
   }
 
@@ -45,13 +46,10 @@
   style="--red-color: {disabled ? disabledColor :redColor}"
 >
 
-  <div class="item-input">
-    <Textfield disabled={disabled}>
-      <Input bind:value={name} />
-      <FloatingLabel for="name-input">Site ID</FloatingLabel>
-      <LineRipple />
-    </Textfield>
-  </div>
+  <Textfield fullwidth disabled={disabled} label="Site ID">
+    <Input fullwidth bind:value={name} />
+    <LineRipple />
+  </Textfield>
 
   <div class="item-delete">
     <IconButton

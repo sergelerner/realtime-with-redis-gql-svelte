@@ -136,10 +136,10 @@
 
   .lhs {
     min-width: 250px;
-    margin-right: 50px;
+    margin-right: 100px;
   }
 
   .rhs {
-    min-width: 500px;
+    width: 100%;
   }
 </style>
