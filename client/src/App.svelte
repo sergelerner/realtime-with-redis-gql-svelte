@@ -30,7 +30,7 @@
 
 	h2 {
 		@include mdc-typography("headline4");
-		margin-bottom: $space-l;
+		margin-bottom: $space-xl;
 	}
 </style>
 

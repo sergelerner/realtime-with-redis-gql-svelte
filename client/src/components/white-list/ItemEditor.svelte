@@ -1,0 +1,101 @@
+<script>
+  import Textfield, { Input } from '@smui/textfield'
+  import FloatingLabel from '@smui/floating-label'
+  import LineRipple from '@smui/line-ripple'
+  import Checkbox from '@smui/checkbox'
+  import FormField from '@smui/form-field'
+  import Button, { Label } from '@smui/button'
+  import IconButton from '@smui/icon-button'
+
+  import InputWithSelfRemove from './InputWithSelfRemove.svelte'
+
+  export let activeItem
+  export let deleteSubItem
+  export let addSubItem
+  export let deleteItem
+  export let saveItem
+
+</script>
+
+<div class="rename">
+  <Textfield>
+    <Input bind:value={activeItem.name} />
+    <FloatingLabel for="name-input">Media Source</FloatingLabel>
+    <LineRipple />
+  </Textfield>
+</div>
+
+<div class="select-all">
+  <FormField>
+    <Checkbox bind:checked={activeItem.all} />
+    <span slot="label">Select all</span>
+  </FormField>
+</div>
+
+<div class="list">
+  {#each activeItem.list as item}
+    <InputWithSelfRemove
+      disabled={activeItem.all}
+      bind:name={item}
+      deleteItem={deleteSubItem}
+    />
+  {:else}
+    {#if activeItem.all}
+      <p>All Site IDs</p>
+    {:else}
+      <p>Add Site ID</p>
+    {/if}
+  {/each}
+</div>
+
+
+{#if !activeItem.all}
+  <div class="edit__add-new">
+    <IconButton
+      disabled={activeItem.all}
+      class="material-icons"
+      on:click={addSubItem}>
+      add
+    </IconButton>
+  </div>
+{/if}
+
+<footer class="actions">
+  <Button on:click={saveItem} variant="raised">
+    <Label>Save</Label>
+  </Button>
+
+  <Button on:click={deleteItem} variant="raised">
+    <Label>Delete</Label>
+  </Button>
+</footer>
+
+<style type="text/scss">
+  @import "@material/typography/mdc-typography";
+  @import "../../styles/variables";
+
+  p {
+    @include mdc-typography("caption");
+  }
+  
+  .rename {
+    margin-bottom: 50px;
+  }
+
+  .select-all {
+    margin-bottom: $space-s;
+  }
+
+  .list {
+    padding-left: $space-s;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding: $space-s;
+    background: #f7f7f7;
+  }
+</style>
