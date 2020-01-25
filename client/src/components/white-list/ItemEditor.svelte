@@ -107,6 +107,5 @@
     justify-content: space-between;
     margin-top: 50px;
     padding: $space-s;
-    background: #f7f7f7;
   }
 </style>

@@ -34,7 +34,7 @@
   import _ from 'lodash'
   import { mutate } from 'svelte-apollo'
   
-  import Header from './Header.svelte'
+  import SearchAndCreate from './SearchAndCreate.svelte'
   import Navigation from './Navigation.svelte'
   import ItemEditor from './ItemEditor.svelte'
 
@@ -103,32 +103,51 @@
   }
 </script>
 
-<Header
-  list={autocompleteList}
-  addItem={addItem}
-/>
+<section class="white-list">
+  <header>
+    <SearchAndCreate
+      list={autocompleteList}
+      addItem={addItem}
+    />
+  </header>
 
-<section class="split-view">
-  <div class="lhs">
-    <Navigation
-      list={_.orderBy(list, ['name'], ['asc'])}
-      setActive={setActive}
-      activeItemName={activeParent.name}
-    />
-  </div>
-  
-  <div class="rhs">
-    <ItemEditor
-      bind:activeItem={activeParent}
-      deleteSubItem={deleteSubItem}
-      addSubItem={addSubItem}
-      deleteItem={deleteItem}
-      saveItem={save}
-    />
-  </div>
+  <section class="split-view">
+    <div class="lhs">
+      <Navigation
+        list={_.orderBy(list, ['name'], ['asc'])}
+        setActive={setActive}
+        activeItemName={activeParent.name}
+      />
+    </div>
+    
+    <div class="rhs">
+      <ItemEditor
+        bind:activeItem={activeParent}
+        deleteSubItem={deleteSubItem}
+        addSubItem={addSubItem}
+        deleteItem={deleteItem}
+        saveItem={save}
+      />
+    </div>
+  </section>
 </section>
 
-<style>
+<style type="text/scss">
+  .white-list {
+    height: 100%;
+    display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+    & > header {
+      flex: 0;
+    }
+
+    & > section {
+      flex: 1;
+    }
+  }
+
   .split-view {
     display: flex;
     flex-direction: row;
