@@ -36,7 +36,7 @@
   
   import SearchAndCreate from './SearchAndCreate.svelte'
   import Navigation from './Navigation.svelte'
-  import ItemEditor from './ItemEditor.svelte'
+  import Editor from './Editor.svelte'
 
   export let cache;
   let activeParent = _.head(cache.data.wl);
@@ -141,7 +141,7 @@
     </div>
     
     <div class="rhs">
-      <ItemEditor
+      <Editor
         bind:activeItem={activeParent}
         searchedSubItemName={searchedSubItemName}
         deleteSubItem={deleteSubItem}
