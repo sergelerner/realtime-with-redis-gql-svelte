@@ -14,6 +14,7 @@
   export let addSubItem
   export let deleteItem
   export let saveItem
+  export let searchedSubItemName
 
 </script>
 
@@ -38,6 +39,7 @@
           disabled={activeItem.all}
           bind:name={item}
           deleteItem={deleteSubItem}
+          searchedSubItemName={searchedSubItemName}
         />
       {:else}
         {#if activeItem.all}
@@ -88,7 +90,7 @@
   }
   
   .rename {
-    margin-bottom: 50px;
+    margin-bottom: $space-xl;
   }
 
   .select-all {

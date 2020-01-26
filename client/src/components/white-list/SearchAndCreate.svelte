@@ -4,7 +4,7 @@
 
   export let list
   export let addItem
-  export let setActive
+  export let highlight
 </script>
 
 <style>
@@ -16,7 +16,7 @@
 </style>
 
 <section class="header">
-  <Autocomplete items={list} setActive={setActive}></Autocomplete>
+  <Autocomplete items={list} highlight={highlight}></Autocomplete>
   <Fab on:click={addItem} mini color="primary">
     <Icon class="material-icons">add</Icon>
   </Fab>

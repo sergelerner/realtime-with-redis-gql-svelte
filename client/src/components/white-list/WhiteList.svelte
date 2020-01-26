@@ -32,7 +32,7 @@
 
 <script>
   import _ from 'lodash'
-  import { mutate } from 'svelte-apollo'
+  import { mutate } from 'svelte-apollo' 
   
   import SearchAndCreate from './SearchAndCreate.svelte'
   import Navigation from './Navigation.svelte'
@@ -40,11 +40,19 @@
 
   export let cache;
   let activeParent = _.head(cache.data.wl);
+  let searchedSubItemName = ''
+  const itemSubItemDelimater = '->'
 
   console.log('cache.data.wl', cache.data.wl)
 
   $: list = [ activeParent, ..._.filter(cache.data.wl, x => x.name !== activeParent.name) ]
-  $: autocompleteList = _.map(list, x => x.name)
+  $: autocompleteList = _.reduce(list, (acc, item) => {
+    const { name, list } = item
+
+    return _.isEmpty(list)
+      ? _.concat(acc, [name])
+      : _.concat(acc, [name], _.map(list, x => `${name}${itemSubItemDelimater}${x}`))
+  }, [])
 
   function addItem() {
     const newItem = {
@@ -75,6 +83,11 @@
 
     cache.data.wl = newList
     activeParent = newActiveParent
+
+    // TODO
+    setTimeout(() => {
+      save()
+    }, 1000);
   }
 
   function deleteSubItem(value) {
@@ -89,6 +102,17 @@
 
   function setActive(name) {
     activeParent = _.find(list, { name })
+  }
+
+  function highlight(name) {
+    const [ itemName, subItemName ] = _.split(name, itemSubItemDelimater)
+    searchedSubItemName = subItemName
+
+    // TODO
+    setTimeout(() => {
+      document.querySelector('.mdc-list-item--selected').scrollIntoView();
+    }, 250);
+    setActive(itemName)
   }
 
   async function save() {
@@ -108,7 +132,7 @@
     <SearchAndCreate
       list={autocompleteList}
       addItem={addItem}
-      setActive={setActive}
+      highlight={highlight}
     />
   </header>
 
@@ -124,6 +148,7 @@
     <div class="rhs">
       <ItemEditor
         bind:activeItem={activeParent}
+        searchedSubItemName={searchedSubItemName}
         deleteSubItem={deleteSubItem}
         addSubItem={addSubItem}
         deleteItem={deleteItem}
@@ -134,6 +159,8 @@
 </section>
 
 <style type="text/scss">
+  @import "../../styles/variables";
+
   .white-list {
     height: 100%;
     display: flex;
@@ -149,6 +176,10 @@
     }
   }
 
+  header {
+    margin-bottom: $space-l;
+  }
+
   .split-view {
     display: flex;
     flex-direction: row;
@@ -157,6 +188,8 @@
   .lhs {
     min-width: 250px;
     margin-right: 100px;
+    max-height: 500px;
+    overflow: auto;
   }
 
   .rhs {

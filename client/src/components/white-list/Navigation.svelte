@@ -8,7 +8,10 @@
 
 <List>
   {#each list as item}
-    <Item on:click={() => setActive(item.name)} selected={item.name === activeItemName}>
+    <Item
+      on:click={() => setActive(item.name)}
+      selected={item.name === activeItemName}
+    >
       <Text>{item.name}</Text>
     </Item>
   {:else}

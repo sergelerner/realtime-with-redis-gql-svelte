@@ -21,15 +21,15 @@
   export let search = '';
   export let isLoading = false;
   export let arrowCounter = 0;
-  export let setActive;
+  export let highlight;
 
   let isAsync = false;
   let minChar = 2;
   let maxItems = 10;
-  let fromStart = true; // Default type ahead
+  let fromStart = false; // Default type ahead
   let input;
 	
-  async function onChange (event) {
+  async function onChange(event) {
     // Is the data given by an outside ajax request?
     if (isAsync) {
       isLoading = true;
@@ -39,7 +39,7 @@
     }
   }
 
-  function filterResults () {
+  function filterResults() {
     results = items.filter(item => {
       if (typeof item !== 'string') {
         item = item.key || '' // Silent fail
@@ -58,7 +58,7 @@
     });
   }
 
-  function onKeyDown (event) {
+  function onKeyDown(event) {
     if (event.keyCode === 40 && arrowCounter < results.length) {
       // ArrowDown
       arrowCounter =  arrowCounter + 1 
@@ -79,11 +79,20 @@
     }
   }
 
-  function close (index = -1) {
-    const currentResult = results[index]
-    const { value } = currentResult
+  function close(index = -1) {
+    if (index === -1) {
+      isOpen = false
+      arrowCounter = -1
+      results = []
 
-    setActive(value)
+      return
+    }
+
+    const currentResult = results[index]
+    const { value = null } = currentResult
+
+    highlight(value)
+
     isOpen = false; 
     arrowCounter = -1;
     results = []
@@ -94,7 +103,6 @@
 <style>
   .autocomplete {
     position: relative;
-    margin-bottom: 50px;
     width: 100%;
   }
 
@@ -112,7 +120,7 @@
   }
 </style>
 
-<svelte:window on:click="{()=>close()}" />
+<svelte:window on:click={()=>close()} />
 
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <Textfield

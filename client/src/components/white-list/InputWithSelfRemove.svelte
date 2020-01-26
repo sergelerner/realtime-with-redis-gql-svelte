@@ -11,13 +11,18 @@
   export let name;
   export let disabled;
   export let deleteItem;
+  export let searchedSubItemName;
+
   let redColor = '#F95052';
   let disabledColor = '#E8E8E8'
 
   let item;
 
   afterUpdate(() => {
-	  flash(item);
+    if (searchedSubItemName === name) {
+      item.scrollIntoView();
+      flash(item);
+    }
 	});
 
 </script>
