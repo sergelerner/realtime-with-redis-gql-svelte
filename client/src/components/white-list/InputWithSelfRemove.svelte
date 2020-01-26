@@ -20,6 +20,7 @@
 
   afterUpdate(() => {
     if (searchedSubItemName === name) {
+      console.log('item node', item)
       item.scrollIntoView();
       flash(item);
     }

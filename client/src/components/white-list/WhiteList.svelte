@@ -107,11 +107,6 @@
   function highlight(name) {
     const [ itemName, subItemName ] = _.split(name, itemSubItemDelimater)
     searchedSubItemName = subItemName
-
-    // TODO
-    setTimeout(() => {
-      document.querySelector('.mdc-list-item--selected').scrollIntoView();
-    }, 250);
     setActive(itemName)
   }
 

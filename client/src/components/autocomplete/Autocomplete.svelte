@@ -117,6 +117,7 @@
     width: 100%;
     max-height: 160px;
     overflow: auto;
+    box-shadow: 7px 7px 0px 0px rgba(0,0,0,0.6);
   }
 </style>
 
