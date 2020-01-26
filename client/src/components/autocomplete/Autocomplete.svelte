@@ -8,26 +8,25 @@
     return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
   }
 
-  export let name= '';
-  export let value= '';
+  export let name = '';
+  export let value = '';
   export let placeholder = '';
-  export let required= false;
-  export let disabled= false;
+  export let required = false;
+  export let disabled = false;
 
   // autocomplete props
-  export let items= [];
-  export let isOpen= false;
-  export let results= [];
-  export let search= '';
-  export let isLoading= false;
-  export let arrowCounter= 0;
+  export let items = [];
+  export let isOpen = false;
+  export let results = [];
+  export let search = '';
+  export let isLoading = false;
+  export let arrowCounter = 0;
+  export let setActive;
 
-  let className= '';
-  let isAsync= false;
-  let minChar= 2;
-  let maxItems= 10;
-  let fromStart= true; // Default type ahead
-  let list;
+  let isAsync = false;
+  let minChar = 2;
+  let maxItems = 10;
+  let fromStart = true; // Default type ahead
   let input;
 	
   async function onChange (event) {
@@ -57,9 +56,6 @@
         label: search.trim() === '' ? text : text.replace(RegExp(regExpEscape(search.trim()), 'i'), "<span>$&</span>")
       }
     });
-
-    const height = results.length > maxItems ? maxItems : results.length
-    list.style.height = `${height * 2.25}rem`
   }
 
   function onKeyDown (event) {
@@ -84,26 +80,15 @@
   }
 
   function close (index = -1) {
-    console.log('close.....', index)
+    const currentResult = results[index]
+    const { value } = currentResult
+
+    setActive(value)
     isOpen = false; 
     arrowCounter = -1;
-    input.blur();
-    if (index > -1) {
-      value = results[index].value;
-      key = results[index].key;
-    } else if (!value) {
-      search = ''
-    }
+    results = []
+    search = value
   }
-
-  function onupdate ({ changed, current }) {
-    if (isAsync && changed.items && current.items.length) {
-      items = current.items;
-      isLoading = false;
-      isOpen = true;
-      filterResults();
-    }
-	}
 </script>
 
 <style>
@@ -115,6 +100,15 @@
 
   :global(.full-width-input) {
     width: 100%;
+  }
+
+  :global(.autocomplete-results.open) {
+    position: absolute;
+    background: white;
+    z-index: 2;
+    width: 100%;
+    max-height: 160px;
+    overflow: auto;
   }
 </style>
 
@@ -139,9 +133,13 @@
     <LineRipple />
   </Textfield>
 
-  <List class="autocomplete-results{!isOpen ? ' hide-results' : ''}" bind:this={list}>
+  <List class="autocomplete-results {isOpen ? ' open' : ''}">
 		{#each results as result, i}
-				<Item on:click="{()=>close(i)}" class="autocomplete-result{ i === arrowCounter ? ' is-active' : '' }">
+				<Item
+          on:click="{()=>close(i)}"
+          class="autocomplete-result"
+          selected={i === arrowCounter}
+        >
           <Text>{@html result.label}</Text>
 				</Item>
 		{/each}

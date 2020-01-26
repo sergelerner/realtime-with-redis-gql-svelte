@@ -108,6 +108,7 @@
     <SearchAndCreate
       list={autocompleteList}
       addItem={addItem}
+      setActive={setActive}
     />
   </header>
 
